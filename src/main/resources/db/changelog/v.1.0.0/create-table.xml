@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.6.xsd">
+
+    <changeSet id="create-table-valute" author="cotelCatherine">
+        <createTable tableName="valute">
+            <column name="id" type="uuid">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="rate_id" type="varchar(15)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="num_code" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="char_code" type="varchar(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="nominal" type="integer">
+                <constraints nullable="false"/>
+            </column>
+            <column name="name" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="value" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vunit_rate" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>

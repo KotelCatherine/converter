@@ -46,7 +46,7 @@ public class ValuteController implements ValuteResource {
         service.delete(id);
     }
 
-    @Scheduled(cron = "00 00 10 * * ?")
+    @Scheduled(cron = "00 19 13 * * ?")
     @GetMapping("/getCurrentRate")
     public List<ValuteDto> getCurrentRate(){
         LocalDate date = LocalDate.now();
@@ -58,7 +58,7 @@ public class ValuteController implements ValuteResource {
 
     }
 
-    @Scheduled(cron = "00 00 10 * * ?")
+    @Scheduled(cron = "00 19 13 * * ?")
     @GetMapping("/fakeGetCurrentRate")
     public void fakeGetCurrentRate(){
 

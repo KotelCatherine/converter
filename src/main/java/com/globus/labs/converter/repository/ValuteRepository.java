@@ -8,5 +8,5 @@ import java.util.UUID;
 
 @Repository
 public interface ValuteRepository extends JpaRepository<Valute, UUID> {
-    boolean existsByRateId(String s);
+    boolean existsByRateId(String rateId);
 }

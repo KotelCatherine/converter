@@ -25,6 +25,7 @@ public class ValuteService {
     private final ValuteMapper mapper;
 
     private final CentralBankService centralBankService;
+    private final KafkaProducerService kafkaProducerService;
 
     @Transactional(rollbackFor = Exception.class)
     public ValuteDto create(ValuteRequest val) {
@@ -36,6 +37,10 @@ public class ValuteService {
         Valute valute = mapper.mapToValute(val);
 
         repository.saveAndFlush(valute);
+
+        String message = String.format("Добавлена новая валюта: %s, %s", valute.charCode(), valute.name());
+
+        kafkaProducerService.sendMessage(message);
 
         return mapper.mapToDto(valute);
 
@@ -65,6 +70,9 @@ public class ValuteService {
 
         repository.saveAndFlush(updatedValute);
 
+        String message = String.format("Обновлена валюта: %s", updatedValute.charCode());
+        kafkaProducerService.sendMessage(message);
+
         return mapper.mapToDto(updatedValute);
 
     }
@@ -73,7 +81,15 @@ public class ValuteService {
     public void delete(UUID id) {
 
         if (repository.existsById(id)) {
+
+            String message = String.format("Удалена валюта: %s", repository.findById(id)
+                    .get()
+                    .charCode());
+
             repository.deleteById(id);
+
+            kafkaProducerService.sendMessage(message);
+
         } else {
             throw new RuntimeException("Валюта с таким идентификатором [ " + id + " ] не найдена");
         }
@@ -110,10 +126,20 @@ public class ValuteService {
 
         }
 
+        setMessage(updatedValutes);
+
+
         return updatedValutes.stream()
                 .map(mapper::mapToDto)
                 .toList();
 
+    }
+
+    private void setMessage(List<Valute> updatedValutes) {
+        for (Valute updatedVal : updatedValutes) {
+            String message = String.format("Обновлена валюта: %s", updatedVal.charCode());
+            kafkaProducerService.sendMessage(message);
+        }
     }
 
     private Valute createNewValute(Valute valute) {

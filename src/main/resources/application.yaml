@@ -1,0 +1,32 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+spring:
+  application:
+    name: valute
+
+  jpa:
+    hibernate:
+      ddl-auto: none
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    enabled: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/valute_db
+    username: postgres
+    password: 12345
+
+springdoc:
+  swagger-ui:
+    path: \swagger-ui.html
+    enabled: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+app:
+  central-bank-client:
+    url: https://cbr.ru/scripts/XML_daily.asp

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-@Tag(name = "Cuisine", description = "Кухни")
+@Tag(name = "Valutes", description = "Валюты")
 public interface ValuteResource {
 
     @PostMapping
